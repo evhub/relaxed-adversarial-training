@@ -52,7 +52,7 @@ patterns_list.append((begin_document_grammar, begin_document_replace))
 
 
 # end document:
-end_document_grammar = Literal("\\end{document}") + NL
+end_document_grammar = NL + Literal("\\end{document}") + NL
 
 def end_document_replace(tokens):
     return ""
