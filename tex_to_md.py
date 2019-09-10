@@ -86,6 +86,17 @@ def subsection_replace(tokens):
 patterns_list.append((subsection_grammar, subsection_replace))
 
 
+# label:
+label_grammar = (
+    Literal("\\label") + BRACES + WHITE
+)
+
+def label_replace(tokens):
+    return ""
+
+patterns_list.append((label_grammar, label_replace))
+
+
 # ital:
 ital_grammar = (
     Literal("\\textit") + BRACES("text")
@@ -286,7 +297,7 @@ patterns_list.append((comment_grammar, comment_replace))
 
 
 # main:
-def main(source, result):
+def main(source, target):
     with open(source, "tr", encoding="utf-8") as fp:
         text = fp.read()
 
@@ -308,7 +319,7 @@ def main(source, result):
                 else:
                     text = _transform_results(results, text)
 
-    with open(result, "tw", encoding="utf-8") as fp:
+    with open(target, "tw", encoding="utf-8") as fp:
         fp.seek(0)
         fp.truncate()
         fp.write(text)
