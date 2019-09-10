@@ -75,9 +75,7 @@ patterns_list.append((section_grammar, section_replace))
 
 
 # subsection:
-subsection_grammar = (
-    Literal("\\subsection") + BRACES("name")
-)
+subsection_grammar = Literal("\\subsection") + BRACES("name")
 
 @tokens_as_dict(assert_keys=("name",))
 def subsection_replace(tokens):
@@ -87,9 +85,7 @@ patterns_list.append((subsection_grammar, subsection_replace))
 
 
 # label:
-label_grammar = (
-    Literal("\\label") + BRACES + WHITE
-)
+label_grammar = Literal("\\label") + BRACES + WHITE
 
 def label_replace(tokens):
     return ""
@@ -98,9 +94,7 @@ patterns_list.append((label_grammar, label_replace))
 
 
 # ital:
-ital_grammar = (
-    Literal("\\textit") + BRACES("text")
-)
+ital_grammar = Literal("\\textit") + BRACES("text")
 
 @tokens_as_dict(assert_keys=("text",))
 def ital_replace(tokens):
@@ -110,9 +104,7 @@ patterns_list.append((ital_grammar, ital_replace))
 
 
 # bf:
-bf_grammar = (
-    Literal("\\textbf") + BRACES("text")
-)
+bf_grammar = Literal("\\textbf") + BRACES("text")
 
 @tokens_as_dict(assert_keys=("text",))
 def bf_replace(tokens):
@@ -179,9 +171,7 @@ patterns_list.append((itemize_grammar, itemize_replace))
 
 
 # autoref:
-autoref_grammar = (
-    Literal("\\autoref") + BRACES("name")
-)
+autoref_grammar = Literal("\\autoref") + BRACES("name")
 
 @tokens_as_dict(assert_keys=("name",))
 def autoref_replace(tokens):
@@ -191,9 +181,7 @@ patterns_list.append((autoref_grammar, autoref_replace))
 
 
 # href links:
-href_grammar = (
-    Literal("\\href") + BRACES("link") + BRACES("text")
-)
+href_grammar = Literal("\\href") + BRACES("link") + BRACES("text")
 
 @tokens_as_dict(assert_keys=("link", "text"))
 def href_replace(tokens):
@@ -284,6 +272,29 @@ def argmin_replace(tokens):
     return "\\text{argmin}"
 
 patterns_list.append((argmin_grammar, argmin_replace))
+
+
+# appropto:
+appropto_grammar = Literal("\\appropto")
+
+def appropto_replace(tokens):
+    return "\\approx"
+
+patterns_list.append((appropto_grammar, appropto_replace))
+
+
+# quote:
+quote_grammar = (
+    Literal("\\begin{quote}") + NL
+    + WHITE + REST_OF_LINE("quote")
+    + Literal("\\end{quote}") + NL
+)
+
+@tokens_as_dict(assert_keys=("quote",))
+def quote_replace(tokens):
+    return "> " + tokens["quote"] + "\n"
+
+patterns_list.append((quote_grammar, quote_replace))
 
 
 # comments:
