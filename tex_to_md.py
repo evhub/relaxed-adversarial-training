@@ -42,6 +42,24 @@ BRACKETS = attach(originalTextFor(nestedExpr("[", "]", ignoreExpr=NL)), trim)
 patterns_list = []
 
 
+# begin document:
+begin_document_grammar = Literal("\\begin{document}")
+
+def begin_document_replace(tokens):
+    return "TODO: strip LaTeX header material."
+
+patterns_list.append((begin_document_grammar, begin_document_replace))
+
+
+# end document:
+end_document_grammar = Literal("\\end{document}") + NL
+
+def end_document_replace(tokens):
+    return ""
+
+patterns_list.append((end_document_grammar, end_document_replace))
+
+
 # section:
 section_grammar = (
     Literal("\\section") + BRACES("name") + NL
@@ -149,16 +167,28 @@ def itemize_replace(tokens):
 patterns_list.append((itemize_grammar, itemize_replace))
 
 
-# autoref sec:
-cref_sec_grammar = (
+# autoref:
+autoref_grammar = (
     Literal("\\autoref") + BRACES("name")
 )
 
 @tokens_as_dict(assert_keys=("name",))
-def cref_sec_replace(tokens):
-    return "[subsection " + tokens["name"] + "](TODO)"
+def autoref_replace(tokens):
+    return "[reference to " + tokens["name"] + "](TODO)"
 
-patterns_list.append((cref_sec_grammar, cref_sec_replace))
+patterns_list.append((autoref_grammar, autoref_replace))
+
+
+# href links:
+href_grammar = (
+    Literal("\\href") + BRACES("link") + BRACES("text")
+)
+
+@tokens_as_dict(assert_keys=("link", "text"))
+def href_replace(tokens):
+    return "[" + tokens["text"] + "](" + tokens["link"] + ")"
+
+patterns_list.append((href_grammar, href_replace))
 
 
 # dash:
