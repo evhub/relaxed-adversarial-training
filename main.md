@@ -71,7 +71,7 @@ That's our starting point, but can we do better? One initial observation is that
 [^6]: Note that this still assumes $C$ is binary—which is not quite right since we might care about some unacceptable actions more than others—though that can also easily be relaxed by moving to an expectation rather than a probability.
 
 $$\begin{align*}
-    \mathbb P(C(M, x) \ |\ x \sim \text{deploy}) \approx \text{argmax}_{\alpha \in \mathbb X_\text{pseudo}} & \mathbb P(\alpha(x) \ |\ x \sim \text{deploy}) \\
+    \mathbb P(C(M, x) \ |\ x \sim \text{deploy}) \approx \max_{\alpha \in \mathbb X_\text{pseudo}} & \mathbb P(\alpha(x) \ |\ x \sim \text{deploy}) \\
     & \cdot\ \mathbb P(C(M, x) \ |\ \alpha(x),~ x \sim \text{deploy})
 \end{align*}$$
 such that, if we can get a good implementation of $\mathbb P$, we no longer have to worry as much about carefully constraining $\mathbb X_\text{pseudo}$, as we can just let $\mathbb P$'s prior do that work for us. Thus, we'll define[^7]
